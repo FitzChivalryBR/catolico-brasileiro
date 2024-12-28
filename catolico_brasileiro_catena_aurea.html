@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Catena Áurea - Uma obra clássica que compila comentários dos Padres da Igreja sobre os Evangelhos. Explore a teologia cristã e a tradição bíblica de forma profunda e rica.">
+    <meta name="keywords" content="Catena Áurea, comentários evangélicos, Padres da Igreja, Evangelho, estudo bíblico, teologia cristã, São Mateus, São Marcos, São Lucas, São João">
+    <meta name="author" content="Católico Brasileiro">
+    <meta name="robots" content="index, follow">
+    <title>Catena Áurea</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <h1>Catena Áurea</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div id="filter">
+            <label for="evangelho">Selecionar Evangelho:</label>
+            <select id="evangelho">
+                <option value="mateus">São Mateus</option>
+                <option value="marcos">São Marcos</option>
+                <option value="lucas">São Lucas</option>
+                <option value="joao">São João</option>
+            </select>
+
+            <label for="capitulo">Selecionar Capítulo:</label>
+            <select id="capitulo">
+                <option value="1">Capítulo 1</option>
+                <option value="2">Capítulo 2</option>
+                <option value="3">Capítulo 3</option>
+                <!-- Adicione mais capítulos conforme necessário -->
+            </select>
+
+            <label for="versiculo">Selecionar Versículo:</label>
+            <select id="versiculo">
+                <option value="1">Versículo 1</option>
+                <option value="2">Versículo 2</option>
+                <option value="3">Versículo 3</option>
+                <!-- Adicione mais versículos conforme necessário -->
+            </select>
+        </div>
+
+        <article>
+            <h2>Capítulo 1</h2>
+            <section>
+                <h3>Versículo 1</h3>
+                <p><em>1. No princípio era o Verbo,</em></p>
+                <p><strong><a href="filhos-de-deus.html">CRISÓSTOMO</a></strong>. (Hom. iv. [iii.] em Joana) Enquanto todos os outros Evangelistas começam
+com a Encarnação, João, passando pela Concepção, Natividade, educação e crescimento, fala
+imediatamente da Geração Eterna, dizendo: No princípio era o Palavra.</p>
+                <p><strong><a href="filhos-de-deus.html">AGOSTINHO</a></strong>. (lib. lxxxiii. Quæst. q. 63) A palavra grega “logos” significa Palavra e Razão.
+Mas nesta passagem é melhor interpretá-la como Palavra; como referindo-se não apenas ao Pai,
+mas à criação das coisas pelo poder operativo da Palavra; enquanto a Razão, embora não produza nada, ainda é corretamente chamada de Razão.</p>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>&copy; 2024 Católico Brasileiro. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById('evangelho').addEventListener('change', function() {
+            console.log('Evangelho selecionado:', this.value);
+        });
+
+        document.getElementById('capitulo').addEventListener('change', function() {
+            console.log('Capítulo selecionado:', this.value);
+        });
+
+        document.getElementById('versiculo').addEventListener('change', function() {
+            console.log('Versículo selecionado:', this.value);
+        });
+    </script>
+</body>
+</html>

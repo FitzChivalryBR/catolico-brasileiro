@@ -1,13 +1,14 @@
-/* Estilos Gerais */
+/* Estilo Geral */
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
+    background-color: #f4f4f9;
     color: #333;
-    background-color: #f9f9f9;
 }
 
+/* Cabeçalho */
 header {
     background: #4CAF50;
     color: #fff;
@@ -44,6 +45,7 @@ nav ul li a:hover {
     background: #4CAF50;
 }
 
+/* Conteúdo Principal */
 main {
     max-width: 800px;
     margin: 2rem auto;
@@ -53,79 +55,53 @@ main {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#filter {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    justify-content: space-between;
-}
-
-#filter label {
-    font-weight: bold;
-    flex: 1 0 100%;
-    margin-bottom: 0.5rem;
-}
-
-#filter select {
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    flex: 1;
-    min-width: 150px;
-    color: #333;
-}
-
-#filter select:focus {
-    border-color: #4CAF50;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
-    outline: none;
-}
-
-#filter select option:checked {
-    background-color: #C8E6C9;
-    color: #2E7D32;
-}
-
-#filter select option {
-    background-color: #E8F5E9;
-    color: #1B5E20;
-}
-
-#filter select:hover {
-    border-color: #66BB6A;
-}
-
-article h2 {
+main h2 {
     color: #4CAF50;
     border-bottom: 2px solid #4CAF50;
     padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
-section h3 {
-    color: #333;
-    font-size: 1.5rem;
-    margin-top: 1.5rem;
+main p {
+    margin: 1rem 0;
+    text-align: center;
 }
 
-p {
+.evangelho-list {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.evangelho-list li {
     margin: 1rem 0;
 }
 
-p a {
-    color: #4CAF50;
+.evangelho-list a {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #4CAF50;
+    color: #fff;
     text-decoration: none;
+    font-size: 1.2rem;
     font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-p a:hover {
-    text-decoration: underline;
+.evangelho-list a:hover {
+    background-color: #45a049;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
+.evangelho-list a:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Rodapé */
 footer {
     text-align: center;
     padding: 1rem 0;
@@ -138,6 +114,7 @@ footer p {
     margin: 0;
 }
 
+/* Responsividade */
 @media screen and (max-width: 768px) {
     header h1 {
         font-size: 2rem;
@@ -147,16 +124,7 @@ footer p {
         padding: 1rem;
     }
 
-    #filter {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    #filter label {
-        margin-bottom: 0.25rem;
-    }
-
-    #filter select {
-        width: 100%;
+    .evangelho-list a {
+        font-size: 1rem;
     }
 }

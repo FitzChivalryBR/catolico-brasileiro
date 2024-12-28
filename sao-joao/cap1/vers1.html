@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comentário do Evangelho de São João 1,1. Explore a análise teológica sobre 'No princípio era o Verbo', baseada nos comentários de Crisóstomo e Santo Agostinho.">
+    <meta name="keywords" content="Catena Áurea, São João 1,1, No princípio era o Verbo, Evangelho, teologia cristã, comentários bíblicos, Crisóstomo, Santo Agostinho">
+    <meta name="author" content="Católico Brasileiro">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Comentário do Evangelho de São João 1,1 - Catena Áurea">
+    <meta property="og:description" content="Análise detalhada do versículo 'No princípio era o Verbo' de São João 1,1, com comentários dos Padres da Igreja.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://127.0.0.1:3000/sao-joao/cap1/vers1.html">
+    <meta property="og:image" content="http://127.0.0.1:3000/filhos-de-deus/sao-crisostomo/crisostomo.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Comentário do Evangelho de São João 1,1 - Catena Áurea">
+    <meta name="twitter:description" content="Explore a teologia cristã com os comentários de Crisóstomo e Agostinho sobre São João 1,1.">
+    <meta name="twitter:image" content="http://127.0.0.1:3000/filhos-de-deus/sao-crisostomo/crisostomo.jpg">
+    <title>Catena Áurea - São João 1,1</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="\favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <h1>Evangelho de São João</h1>
+        <nav>
+            <ul>
+                <li><a href="\pagina-principal.html">Início</a></li>
+                <li><a href="\sobre.html">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <div id="filter">
+            <label for="capitulo">Selecionar Capítulo:</label>
+            <select id="capitulo">
+                <!-- Lista de capítulos -->
+                <option value="1">Capítulo 1</option>
+                <option value="2">Capítulo 2</option>
+                <option value="3">Capítulo 3</option>
+                <option value="4">Capítulo 4</option>
+                <option value="5">Capítulo 5</option>
+                <option value="6">Capítulo 6</option>
+                <option value="7">Capítulo 7</option>
+                <option value="8">Capítulo 8</option>
+                <option value="9">Capítulo 9</option>
+                <option value="10">Capítulo 10</option>
+                <option value="11">Capítulo 11</option>
+                <option value="12">Capítulo 12</option>
+                <option value="13">Capítulo 13</option>
+                <option value="14">Capítulo 14</option>
+                <option value="15">Capítulo 15</option>
+                <option value="16">Capítulo 16</option>
+                <option value="17">Capítulo 17</option>
+                <option value="18">Capítulo 18</option>
+                <option value="19">Capítulo 19</option>
+                <option value="20">Capítulo 20</option>
+                <option value="21">Capítulo 21</option>
+            </select>
+        
+            <label for="versiculo">Selecionar Versículo:</label>
+            <select id="versiculo">
+                <!-- Versículos serão populados dinamicamente -->
+            </select>
+        
+            <button id="buscar">Buscar</button>
+        </div>
+
+        <article>
+            <h2>São João 1,1</h2>
+            <section>
+                <p class="verse"><em>1. No princípio era o Verbo,</em></p>
+                <div class="tooltip">
+                    <strong><a href="#" class="tooltip-link">CRISÓSTOMO</a></strong>
+                    <p class="tooltip-citation">Citação: (Hom. iv. [iii.] em Joana)</p>
+                    
+                    <div class="tooltip-content" id="crisostomo-tooltip">
+                        <div class="tooltip-flex">
+                            <img src="\filhos-de-deus\sao-crisostomo\crisostomo.jpg" alt="Crisóstomo" class="tooltip-image">
+                            <div id="crisostomo-info">
+                                <!-- Conteúdo será carregado dinamicamente -->
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <p>Enquanto todos os outros Evangelistas começam
+com a Encarnação, João, passando pela Concepção, Natividade, educação e crescimento, fala
+imediatamente da Geração Eterna, dizendo: No princípio era o Palavra.</p>
+                <div class="tooltip">
+                    <strong><a href="#" class="tooltip-link">AGOSTINHO</a></strong>
+                    <p class="tooltip-citation">Citação: (lib. lxxxiii. Quæst. q. 63)</p>
+                    
+                    <div class="tooltip-content" id="agostinho-tooltip">
+                        <div class="tooltip-flex">
+                            <img src="\filhos-de-deus\santo-agostinho\agostinho.jpg" alt="Agostinho" class="tooltip-image">
+                            <div id="agostinho-info">
+                                <!-- Conteúdo será carregado dinamicamente -->
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                </div>
+                <p>A palavra grega “logos” significa Palavra e Razão.
+Mas nesta passagem é melhor interpretá-la como Palavra; como referindo-se não apenas ao Pai,
+mas à criação das coisas pelo poder operativo da Palavra; enquanto a Razão, embora não produza nada, ainda é corretamente chamada de Razão.</p>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>&copy; 2024 Católico Brasileiro. Todos os direitos reservados.</p>
+    </footer>
+
+
+    <script>
+
+        const versiculosPorCapitulo = {
+            1: 51, 2: 25, 3: 36, 4: 54, 5: 47,
+            6: 71, 7: 53, 8: 59, 9: 41, 10: 42,
+            11: 57, 12: 50, 13: 38, 14: 31, 15: 27,
+            16: 33, 17: 26, 18: 40, 19: 42, 20: 31, 21: 25
+        };
+
+        const capituloSelect = document.getElementById('capitulo');
+        const versiculoSelect = document.getElementById('versiculo');
+        const buscarButton = document.getElementById('buscar');
+
+        capituloSelect.addEventListener('change', () => {
+            const capitulo = capituloSelect.value;
+            const numVersiculos = versiculosPorCapitulo[capitulo];
+            
+            // Limpar opções de versículos
+            versiculoSelect.innerHTML = '';
+            
+            // Adicionar opções de versículos dinamicamente
+            for (let i = 1; i <= numVersiculos; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `Versículo ${i}`;
+                versiculoSelect.appendChild(option);
+            }
+        });
+
+        buscarButton.addEventListener('click', () => {
+            const capitulo = capituloSelect.value;
+            const versiculo = versiculoSelect.value;
+            if (capitulo && versiculo) {
+                const baseUrl = window.location.origin + '/sao-joao/';
+                const url = `${baseUrl}cap${capitulo}/vers${versiculo}.html`;
+                window.location.href = url;
+            }
+        });
+        // Inicializar com os versículos do primeiro capítulo
+        capituloSelect.dispatchEvent(new Event('change'));
+        
+        document.querySelectorAll('.tooltip').forEach(function(tooltip) {
+            const link = tooltip.querySelector('.tooltip-link');
+            const content = tooltip.querySelector('.tooltip-content');
+
+            link.addEventListener('mouseover', function() {
+                content.style.display = 'block';
+            });
+
+            link.addEventListener('mouseout', function() {
+                content.style.display = 'none';
+            });
+        });
+
+            // Função para carregar dados do JSON de Crisostomo
+        async function loadCrisostomoTooltipContent() {
+            const response = await fetch('/filhos-de-deus/sao-crisostomo/crisostomo.json');
+            const data = await response.json();
+
+            // Popula o conteúdo
+            const tooltipInfo = document.getElementById('crisostomo-info');
+            tooltipInfo.innerHTML = `
+                <table>
+                    <tr><td><strong>Data nascimento:</strong></td><td>${data.dataNascimento}</td></tr>
+                    <tr><td><strong>Data morte:</strong></td><td>${data.dataMorte}</td></tr>
+                    <tr><td><strong>Viveu no século:</strong></td><td>${data.seculo}</td></tr>
+                    <tr><td><strong>Doutor da Igreja:</strong></td><td>${data.doutorDaIgreja}</td></tr>
+                </table>
+                <p class="tooltip-description">${data.descricao}</p>
+            `;
+        }
+
+        // Chamar a função ao carregar a página
+        loadCrisostomoTooltipContent();
+
+
+        // Função para carregar dados do JSON de Agostinho
+        async function loadAgostinhoTooltipContent() {
+            const response = await fetch('/filhos-de-deus/santo-agostinho/agostinho.json');
+            const data = await response.json();
+
+            // Popula o conteúdo
+            const tooltipInfo = document.getElementById('agostinho-info');
+            tooltipInfo.innerHTML = `
+                <table>
+                    <tr><td><strong>Data nascimento:</strong></td><td>${data.dataNascimento}</td></tr>
+                    <tr><td><strong>Data morte:</strong></td><td>${data.dataMorte}</td></tr>
+                    <tr><td><strong>Viveu no século:</strong></td><td>${data.seculo}</td></tr>
+                    <tr><td><strong>Doutor da Igreja:</strong></td><td>${data.doutorDaIgreja}</td></tr>
+                </table>
+                <p class="tooltip-description">${data.descricao}</p>
+            `;
+        }
+
+        // Chamar a função ao carregar a página
+        loadAgostinhoTooltipContent();
+
+        
+    </script>
+
+</body>
+</html>

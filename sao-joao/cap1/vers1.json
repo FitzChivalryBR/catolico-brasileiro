@@ -1,0 +1,27 @@
+[
+    {
+        "id": "CRISÓSTOMO_1",
+        "title": "CRISÓSTOMO",
+        "img_src": "/filhos-de-deus/sao-crisostomo/crisostomo.jpg",
+        "href_filho_de_deus": "/filhos-de-deus/sao-crisostomo/",
+        "citacao": "Citação: (Hom. iv. [iii.] em Joana)",
+        "content": "Enquanto todos os outros Evangelistas começam com a Encarnação, João, passando pela Concepção, Natividade, educação e crescimento, fala imediatamente da Geração Eterna, dizendo: No princípio era a Palavra.",
+        "translations": {
+            "es": "Mientras los demás evangelistas empiezan por la Encarnación, San Juan, yendo más allá de la concepción, del nacimiento, de la educación y del desarrollo de Jesús, nos habla de su eterna generación, diciendo: 'En el principio era el Verbo'.",
+            "la": "Chrysostomus in Ioannem. Omnibus aliis Evangelistis ab incarnatione incipientibus, Ioannes transcurrens conceptionem, nativitatem, educationem, augmentationem, mox de aeterna nobis generatione narrat, dicens in principio erat verbum."
+        }
+    },
+
+    {
+        "id": "CRISÓSTOMO_2",
+        "title": "CRISÓSTOMO",
+        "img_src": "/filhos-de-deus/sao-crisostomo/crisostomo.jpg",
+        "href_filho_de_deus": "/filhos-de-deus/sao-crisostomo/",
+        "citacao": "Citação: (Hom. iv. [iii.] em Joana)",
+        "content": "Enquanto todos os outros Evangelistas começam com a Encarnação, João, passando pela Concepção, Natividade, educação e crescimento, fala imediatamente da Geração Eterna, dizendo: No princípio era a Palavra.",
+        "translations": {
+            "es": "Mientras los demás evangelistas empiezan por la Encarnación, San Juan, yendo más allá de la concepción, del nacimiento, de la educación y del desarrollo de Jesús, nos habla de su eterna generación, diciendo: 'En el principio era el Verbo'.",
+            "la": "Chrysostomus in Ioannem. Omnibus aliis Evangelistis ab incarnatione incipientibus, Ioannes transcurrens conceptionem, nativitatem, educationem, augmentationem, mox de aeterna nobis generatione narrat, dicens in principio erat verbum."
+        }
+    }
+]

@@ -45,13 +45,45 @@ nav ul li a:hover {
 }
 
 main {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 2rem auto;
     padding: 1rem;
     background: #fff;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.text-container {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.text-box {
+    flex: 1;
+    min-width: 300px;
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.text-box-outras-linguas {
+    font-family: Arial, sans-serif;
+    flex: 1;
+    font-size: 16px;
+    min-width: 300px;
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 
 #filter {
     display: flex;
@@ -187,6 +219,8 @@ footer p {
     font-size: 0.9em;
 }
 
+
+
 #filter button {
     padding: 0.75rem 1.5rem;
     background-color: #4CAF50;
@@ -212,9 +246,138 @@ footer p {
 }
 
 .verse {
-    font-size: 1.2rem; /* Ajuste o valor conforme desejado */
-    line-height: 1.8; /* Ajusta o espaçamento entre linhas para melhor legibilidade */
+    font-size: 1.2rem;
+    line-height: 1.8;
 }
+
+
+
+.label-highlight {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    background-color: #f0f8ff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.custom-select {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 1em;
+    border: 2px solid #007BFF;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.custom-select:hover,
+.custom-select:focus {
+    border-color: #0056b3;
+    background-color: #e9ecef;
+}
+
+.translated-box {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #fafafa;
+    border: 1px dashed #007BFF;
+    border-radius: 5px;
+    font-size: 16px; /* Mesmo tamanho */
+    color: #333; /* Mesma cor */
+    line-height: 1.6; /* Mesma altura da linha */
+}
+
+.lbl {
+    position: relative;
+    display: block;
+    height: 24px; /* Aumentar a altura para alinhamento melhor */
+    width: 48px; /* Ajustar a largura proporcional */
+    background: #898989;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+.lbl:after {
+    position: absolute;
+    left: 0;
+    top: -1px; /* Ajuste fino para alinhar verticalmente */
+    display: block;
+    width: 26px;
+    height: 26px;
+    border-radius: 100px;
+    background: white;
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.05);
+    content: '';
+    transition: all .3s ease;
+}
+.lbl:active:after {
+    transform: scale(1.15, 0.85);
+}
+.cbx:checked ~ .lbl {
+    background: #6FBEB5;
+}
+.cbx:checked ~ .lbl:after {
+    left: 22px; /* Ajuste fino para centralizar o círculo */
+    background: #179588;
+}
+.cbx:disabled ~ .lbl {
+    background: #D5D5D5;
+    pointer-events: none;
+}
+.cbx:disabled ~ .lbl:after {
+    background: #BCBDBC;
+}
+.cntr {
+    position: relative;
+    margin-bottom: 10px; /* Reduzir o espaçamento inferior */
+}
+
+  
+.press {
+margin-bottom: 40px;
+}
+.hidden {
+display: none;
+}
+
+  
+/* Tooltip refinado */
+.tooltip-content.tooltip-rounded {
+    display: none;
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    background-color: #ffffff;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 12px; /* Borda arredondada */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.tooltip-content.tooltip-rounded:hover {
+    display: block;
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+.tooltip-link:hover + .tooltip-content.tooltip-rounded {
+    display: block;
+}
+
+.tooltip-image {
+    border-radius: 8px; /* Imagem com bordas suaves */
+}
+
+
+
 
 @media screen and (max-width: 768px) {
     header h1 {
@@ -236,5 +399,9 @@ footer p {
 
     #filter select {
         width: 100%;
+    }
+
+    .text-container {
+        flex-direction: column;
     }
 }

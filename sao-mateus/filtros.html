@@ -98,7 +98,14 @@
     
                     const citation = document.createElement('p');
                     citation.classList.add('tooltip-citation');
-                    citation.textContent = data.citacao;
+
+                    // Verificar se há uma fonte no data.source
+                    if (data.source) {
+                        citation.innerHTML = `${data.citacao} <a href="${data.source}" target="_blank" class="citation-link">Fonte</a>`;
+                    } else {
+                        citation.textContent = data.citacao;
+                    }
+
                     tooltip.appendChild(citation);
     
                     const tooltipContent = document.createElement('div');

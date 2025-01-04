@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Catena Áurea - Uma obra clássica que compila comentários dos Padres da Igreja sobre os Evangelhos. Explore a teologia cristã e a tradição bíblica de forma profunda e rica.">
+    <meta name="keywords" content="Catena Áurea, comentários evangélicos, Padres da Igreja, Evangelho, estudo bíblico, teologia cristã, São Mateus, São Marcos, São Lucas, São João">
+    <meta name="author" content="Católico Brasileiro">
+    <meta name="robots" content="index, follow">
+    <title>Catena Áurea</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="\favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <h1>Catena Áurea - Evangelho de São João</h1>
+        <nav>
+            <ul>
+                <li><a href="\pagina-principal.html">Início</a></li>
+                <li><a href="\sobre.html">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <div id="filter">
+            <label for="capitulo">Selecionar Capítulo:</label>
+            <select id="capitulo">
+                <!-- Lista de capítulos -->
+                <option value="1">Capítulo 1</option>
+                <option value="2">Capítulo 2</option>
+                <option value="3">Capítulo 3</option>
+                <option value="4">Capítulo 4</option>
+                <option value="5">Capítulo 5</option>
+                <option value="6">Capítulo 6</option>
+                <option value="7">Capítulo 7</option>
+                <option value="8">Capítulo 8</option>
+                <option value="9">Capítulo 9</option>
+                <option value="10">Capítulo 10</option>
+                <option value="11">Capítulo 11</option>
+                <option value="12">Capítulo 12</option>
+                <option value="13">Capítulo 13</option>
+                <option value="14">Capítulo 14</option>
+                <option value="15">Capítulo 15</option>
+                <option value="16">Capítulo 16</option>
+                <option value="17">Capítulo 17</option>
+                <option value="18">Capítulo 18</option>
+                <option value="19">Capítulo 19</option>
+                <option value="20">Capítulo 20</option>
+                <option value="21">Capítulo 21</option>
+            </select>
+        
+            <label for="versiculo">Selecionar Versículo:</label>
+            <select id="versiculo">
+                <!-- Versículos serão populados dinamicamente -->
+            </select>
+        
+            <button id="buscar">Buscar</button>
+        </div>
+
+    </main>
+    <footer>
+        <p>&copy; 2024 Católico Brasileiro. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        const versiculosPorCapitulo = {
+            1: 51, 2: 25, 3: 36, 4: 54, 5: 47,
+            6: 71, 7: 53, 8: 59, 9: 41, 10: 42,
+            11: 57, 12: 50, 13: 38, 14: 31, 15: 27,
+            16: 33, 17: 26, 18: 40, 19: 42, 20: 31, 21: 25
+        };
+
+        const capituloSelect = document.getElementById('capitulo');
+        const versiculoSelect = document.getElementById('versiculo');
+        const buscarButton = document.getElementById('buscar');
+
+        capituloSelect.addEventListener('change', () => {
+            const capitulo = capituloSelect.value;
+            const numVersiculos = versiculosPorCapitulo[capitulo];
+            
+            // Limpar opções de versículos
+            versiculoSelect.innerHTML = '';
+            
+            // Adicionar opções de versículos dinamicamente
+            for (let i = 1; i <= numVersiculos; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `Versículo ${i}`;
+                versiculoSelect.appendChild(option);
+            }
+        });
+
+        buscarButton.addEventListener('click', () => {
+            const capitulo = capituloSelect.value;
+            const versiculo = versiculoSelect.value;
+            if (capitulo && versiculo) {
+                const url = `cap${capitulo}/vers${versiculo}.html`;
+                window.location.href = url;
+            }
+        });
+
+        // Inicializar com os versículos do primeiro capítulo
+        capituloSelect.dispatchEvent(new Event('change'));
+        
+        document.querySelectorAll('.tooltip').forEach(function(tooltip) {
+            const link = tooltip.querySelector('.tooltip-link');
+            const content = tooltip.querySelector('.tooltip-content');
+
+            link.addEventListener('mouseover', function() {
+                content.style.display = 'block';
+            });
+
+            link.addEventListener('mouseout', function() {
+                content.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

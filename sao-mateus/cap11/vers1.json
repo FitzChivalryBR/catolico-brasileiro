@@ -1,0 +1,41 @@
+[
+    {
+        "id": "Rábano Mauro2027",
+        "title": "Rábano Mauro",
+        "img_src": "/filhos-de-deus/sao-crisostomo/crisostomo.jpg",
+        "href_filho_de_deus": "/filhos-de-deus/sao-crisostomo/",
+        "citacao": "Rabanus.",
+        "content": "Depois de enviar seus discípulos para pregar, o Senhor os instruiu com palavras prévias. Ele mesmo, também, cumpriu o que ensinou com palavras, oferecendo a primeira pregação aos judeus; e isto é o que se diz e fez quando Jesus concluiu.  Diz, porém, que passou dali.\n",
+        "translations": {
+            "es": "em desenvolvimento",
+            "la": "Postquam discipulos suos dominus ad praedicandum mittens, praemissis verbis eos instruxit, ipse etiam quod docuerat verbis, factis implevit, offerens primam praedicationem Iudaeis; et hoc est quod dicitur et factum est cum consummasset Iesus. Dicit autem transiit inde"
+        },
+        "source": "https://www.corpusthomisticum.org/cmt11.html"
+    },
+    {
+        "id": "São João Crisóstomo2028",
+        "title": "São João Crisóstomo",
+        "img_src": "/filhos-de-deus/sao-crisostomo/crisostomo.jpg",
+        "href_filho_de_deus": "/filhos-de-deus/sao-crisostomo/",
+        "citacao": ". Chrysostomus in Matth.",
+        "content": "Pois, ao enviá-los, retirou-se a si mesmo, dando-lhes lugar e tempo para fazer o que lhes havia ordenado; pois, com ele presente e cuidando deles, ninguém desejaria aproximar-se dos discípulos.\n",
+        "translations": {
+            "es": "em desenvolvimento",
+            "la": "Quia enim eos misit, subtraxit seipsum dans locum eis et tempus facere quae iniunxerat: eo enim praesente et curante, nullus ad discipulos vellet accedere"
+        },
+        "source": "https://www.corpusthomisticum.org/cmt11.html"
+    },
+    {
+        "id": "Remígio de Auxerre2029",
+        "title": "Remígio de Auxerre",
+        "img_src": "/filhos-de-deus/sao-crisostomo/crisostomo.jpg",
+        "href_filho_de_deus": "/filhos-de-deus/sao-crisostomo/",
+        "citacao": ". Remigius.",
+        "content": "Belamente, porém, ele passa da doutrina especial, com a qual instruíra os apóstolos, para a pregação geral nas cidades; pois, nisso, desceu do céu à terra para iluminar a todos; e, nesse ato, os pregadores santos também são exortados a se esforçar para beneficiar a todos.\n",
+        "translations": {
+            "es": "em desenvolvimento",
+            "la": "Pulchre autem de speciali doctrina, qua scilicet apostolos instruxerat, ad generalem transit, in civitatibus praedicando; quia in hoc de caelis ad terras descendit, ut omnes illuminaret: in quo facto monentur etiam sancti praedicatores ut omnibus prodesse studeant"
+        },
+        "source": "https://www.corpusthomisticum.org/cmt11.html"
+    }
+]

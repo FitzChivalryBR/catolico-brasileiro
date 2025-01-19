@@ -172,12 +172,12 @@
                     translationBox.appendChild(translatedBox);
     
                     const defaultLanguage = 'la';
-                    translatedParagraph.textContent = data.translations[defaultLanguage] || '';
+                    translatedParagraph.textContent = data.translations[defaultLanguage]['texto'] || '';
                     select.value = defaultLanguage;
     
                     select.addEventListener('change', () => {
                         const selectedLang = select.value;
-                        translatedParagraph.textContent = data.translations[selectedLang] || '';
+                        translatedParagraph.textContent = data.translations[selectedLang]['texto'] || '';
                     });
     
                     textContainer.appendChild(translationBox);

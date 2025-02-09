@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timeline do Novo Testamento</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      overflow-x: auto;
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 20px;
+      min-width: 2500px;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background-color: #333;
+      z-index: 1;
+    }
+    
+    .timeline-item {
+        display: flex;
+        flex-direction: row; /* Alinha os itens em linha */
+        align-items: center;
+        margin: 0 40px;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 1s ease, transform 1s ease;
+        z-index: 2;
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .timeline-item .dot {
+        width: 20px;
+        height: 20px;
+        background-color: #333;
+        border-radius: 50%;
+        flex-shrink: 0;
+        margin-bottom: 0;
+        margin-right: 10px;
+        cursor: pointer;
+        position: relative;
+        z-index: 3;
+    }
+
+    .timeline-item .content {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: left; /* Alinha o texto à esquerda */
+        max-width: 200px;
+        position: relative;
+    }
+
+    .timeline-item .content h2 {
+      margin: 0;
+      font-size: 1.2em;
+      color: #333;
+    }
+
+    .timeline-item .content p {
+      margin: 5px 0 0;
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    .timeline-item .content .author {
+      color: #007bff;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .timeline-item .content .author:hover {
+      color: #0056b3;
+    }
+
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000; /* Certifique-se de que o popup principal tenha uma prioridade alta */
+        width: 300px;
+        max-width: 90%;
+        box-sizing: border-box;
+    }
+
+
+
+    .author-popup {
+        display: none;
+        position: absolute; /* Relativo ao container pai */
+        top: 100%; /* Aparece logo abaixo do texto */
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 999; /* Fica abaixo do popup principal */
+        width: 250px;
+        box-sizing: border-box;
+    }
+
+    .author-popup img, 
+    .popup img {
+        width: 100%; /* Garante que a imagem ocupe 100% do contêiner */
+        max-width: 150px; /* Define um tamanho máximo para a largura */
+        height: auto; /* Mantém a proporção da imagem */
+        display: block; /* Certifica-se de que a imagem é renderizada como bloco */
+        margin: 0 auto; /* Centraliza a imagem no contêiner */
+        border-radius: 8px; /* Adiciona bordas arredondadas */
+        object-fit: cover; /* Garante que a imagem se encaixe no contêiner, cortando as bordas se necessário */
+    }
+
+    .popup h3 {
+      margin-top: 0;
+      font-size: 1.2em;
+    }
+
+    .popup ul {
+      padding-left: 20px;
+    }
+
+    .popup ul li {
+      margin-bottom: 8px;
+    }
+
+    .popup .close {
+      display: block;
+      text-align: right;
+      margin-top: 10px;
+    }
+
+    .popup .close button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .popup .close button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Responsividade para mobile */
+    @media (max-width: 768px) {
+      .timeline {
+        flex-direction: column;
+        align-items: flex-start;
+        min-width: auto;
+        padding: 20px 10px;
+      }
+
+      .timeline::before {
+        top: 0;
+        bottom: 0;
+        left: 20px;
+        width: 4px;
+        height: auto;
+      }
+
+      .timeline-item {
+        margin: 20px 0;
+        transform: translateX(-50px);
+      }
+
+      .timeline-item.visible {
+        transform: translateX(0);
+      }
+
+
+      .timeline-item .content {
+        text-align: left;
+        max-width: 100%;
+      }
+
+      .popup {
+        width: auto;
+        max-width: 90%;
+      }
+    }
+
+
+    /* Estilos para a seção do PDF */
+    .pdf-section {
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 800px;
+      width: 90%;
+    }
+
+    .pdf-section h2 {
+      margin-bottom: 20px;
+      font-size: 1.5em;
+      color: #333;
+    }
+
+    .pdf-controls {
+      margin-bottom: 20px;
+    }
+
+    .pdf-controls button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 0 5px;
+    }
+
+    .pdf-controls button:hover {
+      background-color: #0056b3;
+    }
+
+    .pdf-controls input {
+      padding: 10px;
+      width: 60px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .pdf-viewer {
+      width: 100%;
+      height: 500px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .pdf-viewer canvas {
+        display: block;
+        margin: 10px auto;
+    }
+    
+    .pdf-viewer {
+        overflow: auto; /* Permite rolagem */
+    }
+
+
+    .styled-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .styled-button:hover {
+        background-color: #0056b3;
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        transform: scale(1.05);
+    }
+
+    .styled-button:active {
+        background-color: #003f7f;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transform: scale(0.95);
+    }
+
+    .timeline-item .year-difference {
+        font-size: 0.9em;
+        color: #777;
+        text-align: center;
+        margin-top: 5px; /* Espaçamento entre o dot e o texto */
+    }
+
+    @keyframes blink {
+            0% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        .timeline-item .dot.blink {
+            animation: blink 0.5s infinite alternate;
+        }
+
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+            background-color: #333;
+        }
+        50% {
+            transform: scale(1.2);
+            background-color: #555;
+        }
+        100% {
+            transform: scale(1);
+            background-color: #333;
+        }
+    }
+
+
+    .timeline-item .dot.pulse {
+        animation: pulse 0.5s infinite ease-in-out;
+    }
+
+
+    .year-difference {
+        font-size: 0.9em;
+        color: #777;
+        text-align: center;
+        display: none;
+        position: absolute;
+        background: white;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        z-index: 4;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: translate(-50%, -150%);
+        white-space: nowrap;
+    }
+
+  /* doacao pix */
+  #btn-doar {
+      background-color: #FFD700;
+      color: #000;
+      font-size: 10px;
+      font-weight: bold;
+      padding: 10px 50px;
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: all 0.5s ease;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      animation: button-glow 1.5s infinite alternate;
+  }
+
+  #btn-doar:hover {
+      background-color: #00e056;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+      transform: translateY(-10px);
+  }
+
+  @keyframes button-glow {
+      0% {
+          box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+      }
+      100% {
+          box-shadow: 0 0 20px rgba(0, 224, 86, 0.7), 0 0 40px rgba(255, 215, 0, 1);
+      }
+  }
+
+
+
+  </style>
+</head>
+<body>
+
+
+
+  <div class="timeline">
+    <!-- Eventos da Timeline -->
+    <div class="timeline-item">
+      <div class="dot"></div>
+      <div class="content">
+        <h2>Nascimento de Cristo</h2>
+        <!-- <p>6-4 a.C.</p> -->
+      </div>
+    </div>
+
+    <div class="timeline-item" style="position: relative;">
+        <div class="dot"></div>
+        <div class="content">
+          <h2>Morte & Ressureição de Cristo</h2>
+          <p>33 d.C.</p>
+        </div>
+    </div>
+
+    <div class="timeline-item">
+        <div class="dot pulse" onclick="toggleYearDifference(this)"></div>
+        <div class="year-difference">~ 25 anos após a morte de Cristo</div>
+        <div class="content">
+            <h2>Cartas de Paulo</h2>
+            <p>50-67 d.C.</p>
+            <p><strong>Autor:</strong> <span class="author" data-info="Paulo foi um apóstolo que escreveu várias cartas às comunidades cristãs. Ele era originalmente um perseguidor dos cristãos, mas converteu-se após uma visão de Jesus." data-img="https://orthodoxwiki.org/images/6/62/Apostle_Paul.JPG">Paulo</span></p>
+            <br>
+            <button id="showPopup" class="styled-button">Ver lista</button>
+        </div>
+    </div>
+
+    <div class="timeline-item">
+        <div class="dot pulse" onclick="toggleYearDifference(this)"></div>
+        <div class="year-difference">~ 34 anos após a morte de Cristo</div>
+        <div class="content">
+            <h2>Evangelho de Marcos</h2>
+            <p>65-70 d.C.</p>
+            <p><strong>Autor:</strong> <span class="author" data-info="Marcos foi um discípulo de Pedro e escreveu o Evangelho baseado nos ensinamentos de Pedro. Ele é frequentemente associado à fundação da Igreja em Alexandria." data-img="https://orthodoxwiki.org/images/e/e7/Apostle_Mark.jpg">Marcos</span></p>
+        </div>
+    </div>
+
+    <div class="timeline-item">
+        <div class="dot pulse" onclick="toggleYearDifference(this)"></div>
+        <div class="year-difference">~ 42 anos após a morte de Cristo</div>
+        <div class="content">
+            <h2>Evangelho de Mateus</h2>
+            <p>70-80 d.C.</p>
+            <p><strong>Autor:</strong> <span class="author" data-info="Mateus foi um dos doze apóstolos e um antigo cobrador de impostos. Seu Evangelho enfatiza o cumprimento das profecias do Antigo Testamento." data-img="https://orthodoxwiki.org/images/e/e7/Apostle_Mark.jpg">Mateus</span></p>
+        </div>
+    </div>
+
+    <div class="timeline-item">
+        <div class="dot pulse" onclick="toggleYearDifference(this)"></div>
+        <div class="year-difference">~ 52 anos após a morte de Cristo</div>
+        <div class="content">
+            <h2>Evangelho de Lucas</h2>
+            <p>80-90 d.C.</p>
+            <p><strong>Autor:</strong> <span class="author" data-info="Lucas foi um médico e companheiro de Paulo. Ele escreveu o Evangelho de Lucas e o livro de Atos dos Apóstolos, destacando a universalidade da salvação." data-img="https://orthodoxwiki.org/images/c/c2/Luke_first_icon.jpg">Lucas</span></p>
+        </div>
+    </div>
+
+    <div class="timeline-item">
+        <div class="dot pulse" onclick="toggleYearDifference(this)"></div>
+        <div class="year-difference">~ 52 anos após a morte de Cristo</div>
+        <div class="content">
+            <h2>Atos dos Apóstolos</h2>
+            <p>80-90 d.C.</p>
+            <p><strong>Autor:</strong> <span class="author" data-info="Lucas foi o autor de Atos dos Apóstolos, que descreve a história da igreja primitiva e a expansão do cristianismo." data-img="https://orthodoxwiki.org/images/c/c2/Luke_first_icon.jpg">Lucas</span></p>
+        </div>
+    </div>
+
+    <div class="timeline-item">
+        <div class="dot pulse" onclick="toggleYearDifference(this)"></div>
+        <div class="year-difference">~ 59 anos após a morte de Cristo</div>
+        <div class="content">
+            <h2>Evangelho de João</h2>
+            <p>90-100 d.C.</p>
+            <p><strong>Autor:</strong> <span class="author" data-info="João foi um dos doze apóstolos e é conhecido como o 'discípulo amado'. Ele escreveu o Evangelho de João, três epístolas e o Apocalipse." data-img="https://orthodoxwiki.org/images/1/11/John_the_Theologian.jpg">João</span></p>
+        </div>
+    </div>
+
+    <div class="timeline-item">
+        <div class="dot pulse" onclick="toggleYearDifference(this)"></div>
+        <div class="year-difference">~ 59 anos após a morte de Cristo</div>
+        <div class="content">
+            <h2>Apocalipse</h2>
+            <p>90-95 d.C.</p>
+            <p><strong>Autor:</strong> <span class="author" data-info="João, o apóstolo, é tradicionalmente considerado o autor do Apocalipse, que descreve visões proféticas sobre o fim dos tempos." data-img="https://orthodoxwiki.org/images/1/11/John_the_Theologian.jpg">João</span></p>
+        </div>
+    </div>
+
+  </div>
+
+  <div class="popup" id="popup">
+    <h3>Cartas de Paulo - Ordem aproximada</h3>
+    <ul>
+      <li>1 Tessalonicenses (por volta de 50-52 d.C.)</li>
+      <li>2 Tessalonicenses (por volta de 51-53 d.C.)</li>
+      <li>Gálatas (por volta de 53-55 d.C.)</li>
+      <li>1 Coríntios (por volta de 54-55 d.C.)</li>
+      <li>2 Coríntios (por volta de 55-56 d.C.)</li>
+      <li>Romanos (por volta de 57-58 d.C.)</li>
+      <li>Filipenses (por volta de 60-62 d.C., durante o cativeiro de Paulo)</li>
+      <li>Filemon (por volta de 60-62 d.C.)</li>
+      <li>Colossenses (por volta de 60-62 d.C.)</li>
+      <li>Efésios (por volta de 60-62 d.C.)</li>
+      <li>1 Timóteo (por volta de 62-64 d.C.)</li>
+      <li>Tito (por volta de 62-64 d.C.)</li>
+      <li>2 Timóteo (por volta de 64-67 d.C., pouco antes da morte de Paulo)</li>
+    </ul>
+    <div class="close">
+      <button id="closePopup">Fechar</button>
+    </div>
+  </div>
+
+
+<!--
+  <section id="doacao-pix">
+    <center>
+        <button id="btn-doar">
+            <i class="fa-brands fa-pix"></i> Doar via Pix
+        </button>            
+        <div id="pix-info" style="display: none; margin-top: 10px; text-align: center;">
+            <img src="https://fastprint.com.br/wp-content/uploads/2023/06/Detalhe-prod-qrcode-full2x-1010x718-1.jpg.webp" alt="QR Code Pix" style="width: 200px; height: auto; margin-bottom: 10px;">
+            <p>Chave Pix: <strong>ivivergasta@gmail.com</strong></p>
+        </div>
+    </center>
+  </section>
+-->
+
+  <!-- Nova seção para visualizar o PDF embutido -->
+  <div class="pdf-section">
+    <h3>Fonte da informação acima:<br>Raymonde E. Brown - An Introduction to the New Testament</h3>
+    <div class="pdf-controls">
+      <button id="prevPage">Anterior</button>
+      <input type="number" id="pageNumber" value="1" min="1" />
+      <button id="nextPage">Próxima</button>
+      <button id="zoomOut">-</button>
+      <button id="zoomIn">+</button>
+    </div>
+    <div class="pdf-viewer">
+      <canvas id="pdfCanvas"></canvas>
+    </div>
+  </div>
+
+
+
+  <script>
+    // Animação da Timeline
+    const timelineItems = document.querySelectorAll('.timeline-item');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.5 });
+
+    timelineItems.forEach(item => {
+      observer.observe(item);
+    });
+
+    // Pop-up das cartas de Paulo
+    const showPopupButton = document.getElementById('showPopup');
+    const popup = document.getElementById('popup');
+    const closePopupButton = document.getElementById('closePopup');
+
+    // Abrir pop-up ao clicar no botão
+    showPopupButton.addEventListener('click', (event) => {
+        popup.style.display = 'block';
+        event.stopPropagation(); // Impede que o clique no botão feche o pop-up imediatamente
+        
+    });
+
+    // Fechar pop-up ao clicar no botão "Fechar"
+    closePopupButton.addEventListener('click', () => {
+        popup.style.display = 'none';
+        
+    });
+
+    // Fechar pop-up ao clicar fora dele
+    document.addEventListener('click', (event) => {
+        if (!popup.contains(event.target) && event.target !== showPopupButton) {
+            popup.style.display = 'none';
+        }
+    });
+
+    // Pop-up dos autores
+    const authors = document.querySelectorAll('.author');
+
+    authors.forEach(author => {
+        const popup = document.createElement('div');
+        popup.className = 'author-popup';
+        popup.innerHTML = `
+            <div style="text-align: center;">
+                <img src="${author.getAttribute('data-img')}" alt="${author.textContent}">
+            </div>
+            <p>${author.getAttribute('data-info')}</p>
+            <div class="close">
+                <button style="margin-top: 10px;">Fechar</button>
+            </div>
+        `;
+        author.parentElement.appendChild(popup);
+
+        const closeButton = popup.querySelector('.close button');
+
+        author.addEventListener('click', () => {
+            popup.style.display = 'block';
+        });
+
+        closeButton.addEventListener('click', () => {
+            popup.style.display = 'none';
+        });
+
+        // Fecha o popup ao clicar fora
+        document.addEventListener('click', (event) => {
+            if (!popup.contains(event.target) && event.target !== author) {
+                popup.style.display = 'none';
+            }
+        });
+    });
+
+
+
+    // Configuração do PDF.js
+    const pdfViewer = document.getElementById('pdfCanvas');
+    const pageNumberInput = document.getElementById('pageNumber');
+    const prevPageButton = document.getElementById('prevPage');
+    const nextPageButton = document.getElementById('nextPage');
+
+    let pdfDoc = null;
+    let pageNum = 1;
+    let pageRendering = false;
+    let pageNumPending = null;
+    let scale = 1.9; // Escala inicial do zoom
+
+    // Função para renderizar a página
+    // Atualizar renderização com novo zoom
+    function renderPage(num) {
+    pageRendering = true;
+    pdfDoc.getPage(num).then((page) => {
+        const viewport = page.getViewport({ scale });
+        pdfViewer.height = viewport.height;
+        pdfViewer.width = viewport.width;
+
+        const renderContext = {
+        canvasContext: pdfViewer.getContext('2d'),
+        viewport: viewport,
+        };
+
+        page.render(renderContext).promise.then(() => {
+        pageRendering = false;
+        if (pageNumPending !== null) {
+            renderPage(pageNumPending);
+            pageNumPending = null;
+        }
+        });
+    });
+
+    pageNumberInput.value = num;
+    }
+
+    // Botões de zoom
+    const zoomInButton = document.getElementById('zoomIn');
+    const zoomOutButton = document.getElementById('zoomOut');
+
+    zoomInButton.addEventListener('click', () => {
+    scale += 0.5; // Aumenta o zoom
+    renderPage(pageNum);
+    });
+
+    zoomOutButton.addEventListener('click', () => {
+    if (scale > 0.5) { // Define um limite mínimo para o zoom
+        scale -= 0.5; // Diminui o zoom
+        renderPage(pageNum);
+    }
+    });
+
+    // Função para carregar o próximo ou anterior
+    function queueRenderPage(num) {
+      if (pageRendering) {
+        pageNumPending = num;
+      } else {
+        renderPage(num);
+      }
+    }
+
+    // Navegação entre páginas
+    prevPageButton.addEventListener('click', () => {
+      if (pageNum <= 1) return;
+      pageNum--;
+      queueRenderPage(pageNum);
+    });
+
+    nextPageButton.addEventListener('click', () => {
+      if (pageNum >= pdfDoc.numPages) return;
+      pageNum++;
+      queueRenderPage(pageNum);
+    });
+
+    // Atualizar página ao digitar no input
+    pageNumberInput.addEventListener('change', () => {
+      const newPage = parseInt(pageNumberInput.value, 10);
+      if (newPage >= 1 && newPage <= pdfDoc.numPages) {
+        pageNum = newPage;
+        queueRenderPage(pageNum);
+      }
+    });
+
+
+    // Carregar o PDF
+    const url = 'Raymonde E. Brown - An Introduction to the New Testament.pdf'; // Substitua pelo caminho do seu PDF
+    pdfjsLib.getDocument(url).promise.then((pdfDoc_) => {
+      pdfDoc = pdfDoc_;
+      renderPage(pageNum);
+    });
+
+    function toggleYearDifference(dot) {
+        const yearDifference = dot.nextElementSibling;
+        if (yearDifference.style.display === "none" || yearDifference.style.display === "") {
+            yearDifference.style.display = "block";
+            document.addEventListener('click', outsideClickListener);
+        } else {
+            yearDifference.style.display = "none";
+            document.removeEventListener('click', outsideClickListener);
+        }
+
+        function outsideClickListener(event) {
+            if (!dot.contains(event.target) && !yearDifference.contains(event.target)) {
+                yearDifference.style.display = "none";
+                document.removeEventListener('click', outsideClickListener);
+            }
+        }
+    }
+
+    /* doacao pix */
+    document.getElementById('btn-doar').addEventListener('click', function () {
+    const pixInfo = document.getElementById('pix-info');
+    pixInfo.style.display = pixInfo.style.display === 'none' ? 'block' : 'none';
+    });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrossel com Filtros e Navegação</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <style>
+        .carousel {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .swiper-slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .swiper-slide {
+            transition: transform 0.5s ease-in-out; /* Adiciona uma transição suave */
+        }
+        
+        .swiper .swiper-slide-active {
+            animation: slide-in 0.5s linear infinite;
+          }
+          
+         @keyframes slide-in {
+          0% { transform: translateX(0); }
+        }
+
+        .swiper-button-next, .swiper-button-prev {
+            position: absolute;
+            top: 70%;
+            transform: translateY(-50%);
+            background-color: rgba(235, 4, 4, 0.5);
+            color: white;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 18px;
+            &:hover {
+                filter: brightness(70%);
+              }
+        }
+        
+        .swiper-button-next {
+            right: 15px;
+        }
+        .swiper-button-prev {
+            left: 10px;
+        }
+        .filters {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .filters button {
+            margin: 5px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .filters button.active {
+            background-color: #0056b3;
+        }
+
+
+    </style>
+
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<section class="carousel">
+    <div class="filters">
+        <button data-century="all" class="active">Todos</button>
+        <button data-century="19">Século XIX</button>
+        <button data-century="20">Século XX</button>
+        <button data-century="21">Século XXI</button>
+    </div>
+    <div class="swiper mySwiper2">
+        <div class="swiper-wrapper">
+            <!-- Slides serão adicionados dinamicamente via JavaScript -->
+        </div>
+    </div>
+    <!-- <div class="swiper-button-next"></div> -->
+    <!-- <div class="swiper-button-prev"></div> -->
+</section>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+    // Dados das imagens com URLs associadas
+    const images = [
+        { src: ["https://pic.surf/asj", "https://pic.surf/9sqh"], century: "19", alt: "Carro do século XIX", url: "pagina19.html", name: 'Santa Maria Goretti', dia: '06/02/2025'},
+        { src: ["https://pic.surf/asj", "https://pic.surf/9sqh"], century: "20", alt: "Carro do século XX", url: "pagina20.html", name: 'Santo X', dia: '2025-02-06' },
+        { src: ["https://pic.surf/asj", "https://pic.surf/9sqh"], century: "21", alt: "Carro do século XXI", url: "pagina21.html", name: 'Santo X', dia: '2025-02-06' },
+        { src: ["https://pic.surf/asj", "https://pic.surf/9sqh"], century: "19", alt: "Carro do século XIX", url: "pagina19.html", name: 'Santo X', dia: '06/02/2025' },
+        { src: ["https://pic.surf/asj", "https://pic.surf/9sqh"], century: "20", alt: "Carro do século XX", url: "pagina20.html", name: 'Santo X', dia: '2025-02-06' },
+        { src: ["https://pic.surf/asj", "https://pic.surf/9sqh"], century: "21", alt: "Carro do século XXI", url: "pagina21.html", name: 'Santo X', dia: '2025-02-06' }
+    ];
+
+    let swiper;
+
+    function renderSlides(century) {
+        const swiperWrapper = document.querySelector(".swiper-wrapper");
+        swiperWrapper.innerHTML = "";
+        
+        const filteredImages = century === "all" ? images : images.filter(img => img.century === century);
+
+        filteredImages.forEach(img => {
+            const slide = document.createElement("div");
+            slide.classList.add("swiper-slide");
+        
+            // Verifica se a data de hoje corresponde ao dia da imagem
+            const hoje = new Date();
+            const diaAtual = hoje.getDate(); // Dia do mês (1-31)
+            const mesAtual = hoje.getMonth() + 1; // Mês (1-12)
+        
+            // Assume que img.dia está no formato "DD/MM"
+            const [diaImg, mesImg] = img.dia.split('/').map(Number);
+        
+            const isDiaDeHoje = diaImg === diaAtual && mesImg === mesAtual;
+        
+            // Aplica o efeito de brilho se for o dia correto
+            const glowStyle = isDiaDeHoje 
+                ? `box-shadow: 0 0 25px 0px #007BFF; filter: brightness(1.3);` 
+                : '';
+        
+            slide.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; font-family: 'Blackletter', serif;">
+                    <a href="${img.url}">
+                        <img src="${img.src[0]}" alt="${img.alt}" style="max-width: 100%; max-height: 80%; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); ${glowStyle}" class="fade-image">
+                    </a>
+                    <div style="text-align: center; font-size: 28px; color: #333; font-weight: bold; margin-top: 15px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+                        ${img.name}
+                    </div>
+                </div>
+            `;
+        
+            // Adiciona o slide ao contêiner do Swiper
+            swiperWrapper.appendChild(slide);
+
+            // Alternar as imagens no array src com efeito de fade
+            let currentIndex = 0;
+            const imgElement = slide.querySelector('img');
+
+            setInterval(() => {
+                // Fade out
+                imgElement.style.opacity = 0;
+
+                // Após o fade out, troca a imagem e faz fade in
+                setTimeout(() => {
+                    currentIndex = (currentIndex + 1) % img.src.length;
+                    imgElement.src = img.src[currentIndex];
+
+                    // Fade in
+                    imgElement.style.opacity = 1;
+                }, 500); // Tempo de fade out (500ms)
+            }, 3000); // Intervalo total de 3 segundos
+        });
+
+        if (swiper) swiper.destroy();
+        swiper = new Swiper(".mySwiper2", {
+            slidesPerView: 3,
+            spaceBetween: 24,
+            loop: true,
+           
+           autoplay: {
+                delay: 0, // Define o delay para 0 para animação contínua
+                disableOnInteraction: true, // Mantém a animação mesmo com interação
+                pauseOnMouseEnter:true,
+            },
+            speed: 2000, // Define a velocidade da animação (2 segundos)
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+        });
+    };
+
+    const filterButtons = document.querySelectorAll(".filters button");
+    filterButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            filterButtons.forEach(btn => btn.classList.remove("active"));
+            button.classList.add("active");
+            const century = button.getAttribute("data-century");
+            renderSlides(century);
+        });
+    });
+
+    renderSlides("all");
+</script>
+
+<style>
+    .fade-image {
+        transition: opacity 0.5s ease-in-out; /* Transição suave de 0.5s */
+        opacity: 1; /* Inicia com opacidade total */
+    }
+</style>
+
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Católico do Brasil</title>
+  <style>
+    :root {
+      --background: 0 0% 98%;
+      --foreground: 20 14.3% 4.1%;
+      --primary: 47.9 95.8% 53.1%;
+      --primary-foreground: 26 83.3% 14.1%;
+      --secondary: 60 4.8% 95.9%;
+      --muted-foreground: 25 5.3% 44.7%;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: linear-gradient(to bottom, hsl(var(--background)), hsl(var(--secondary)));
+      min-height: 100vh;
+      color: hsl(var(--foreground));
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.8);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+    }
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 1.125rem;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      color: #333;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover {
+      color: hsl(var(--primary));
+    }
+
+    .submenu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 200px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-item:hover .submenu {
+      display: block;
+    }
+
+    .submenu-item {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      color: #333;
+      text-decoration: none;
+      display: block;
+      transition: background-color 0.2s;
+    }
+
+    .submenu-item:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    /* Main Content Styles */
+    main {
+      padding-top: 6rem;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 4rem;
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    .hero-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title h1 {
+      font-size: 2.25rem;
+      font-weight: bold;
+    }
+
+    .hero-description {
+      font-size: 1.25rem;
+      color: hsl(var(--muted-foreground));
+      max-width: 42rem;
+      margin: 0 auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 2rem 0;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform 0.2s;
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    .card-link {
+      text-decoration: none; /* Remove o sublinhado do link */
+      color: inherit; /* Mantém a cor do texto original */
+      display: block; /* Faz o link ocupar todo o espaço do card */
+    }
+
+    .card:hover {
+      transform: translateY(-8px); /* Lifts the card slightly */
+      box-shadow: 0 4px 8px rgba(94, 60, 7, 0.2); /* Adds a subtle shadow */
+      background-color: #fbfff2; /* Light blue background on hover (you can change this color) */
+    }
+
+    .card-icon {
+      width: 3rem;
+      height: 3rem;
+      margin: 0 auto 1rem;
+      color: hsl(var(--primary));
+    }
+
+    .card h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      color: hsl(var(--muted-foreground));
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 1rem;
+        flex-direction: column;
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .submenu {
+        position: static;
+        background: none;
+        box-shadow: none;
+        border: none;
+        display: none;
+        padding-left: 1rem;
+      }
+
+      .nav-item.active .submenu {
+        display: block;
+      }
+
+      .hamburger {
+        display: block;
+      }
+    }
+
+
+
+      .no-border-iframe {
+        border: none;
+      }
+
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container navbar-container" style="display: flex; flex-direction: column;">
+      <div class="navbar-brand">
+        <span>Portal Católico</span>
+      </div>
+
+
+      <button class="hamburger">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="/" class="nav-link">Início</a></li>
+        <li class="nav-item">
+          <a href="/biblia" class="nav-link">Bíblia Online</a>
+          <div class="submenu">
+            <a href="/biblia/ave-maria" class="submenu-item">Bíblia Ave Maria</a>
+            <a href="/biblia/matos-soares" class="submenu-item">Bíblia Matos Soares (1956)</a>
+            <a href="/biblia/outras" class="submenu-item">Outras</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="/catenas" class="nav-link">Catenas</a>
+          <div class="submenu">
+            <a href="/catenas/aurea" class="submenu-item">Catena Áurea - São Tomás de Aquino</a>
+            <a href="/catenas/moderna" class="submenu-item">Catena Moderna</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="/obras" class="nav-link">Obras Traduzidas</a>
+          <div class="submenu">
+            <a href="/obras/cornelio" class="submenu-item">Tesouros do Cornélio a Lápide</a>
+            <a href="/obras/ockham" class="submenu-item">Catena da teoria da Lógica - Ockham</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="/catecismo" class="nav-link">Catecismo Online</a></li>
+        <li class="nav-item"><a href="/direito-canonico" class="nav-link">Direito Canônico Online</a></li>
+        <li class="nav-item"><a href="/artigos" class="nav-link">Artigos</a></li>
+        <li class="nav-item">
+          <a href="/outros" class="nav-link">Outros</a>
+          <div class="submenu">
+            <a href="/linha_do_tempo/viagens_sao_paulo_apostolo.html" class="submenu-item">Viagens de São Paulo</a>
+            <a href="/outros/santos-modernos" class="submenu-item">Santos Modernos</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-title">
+        <h1>Portal Católico</h1>
+      </div>
+      <p class="hero-description">
+        Bem-vindo ao Portal Católico do Brasil, sua fonte de conhecimento e espiritualidade.
+      </p>
+    </section>
+
+
+    <div class="santos-modernos-html">
+      <center>
+        <iframe src="santos_modernos/santos_modernos.html" width="500" height="300" class="no-border-iframe"></iframe>
+      </center>
+    </div>
+
+
+    <div class="grid">
+      <div class="card">
+        <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+        <h2>Bíblia Online</h2>
+        <p>Acesse diferentes traduções da Bíblia Sagrada</p>
+      </div>
+
+      <div class="card">
+        <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+        </svg>
+        <h2>Catecismo</h2>
+        <p>Explore os ensinamentos da Igreja Católica</p>
+      </div>
+
+      <div class="card">
+        <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l2 5h5l-4 4 2 5-5-3-5 3 2-5-4-4h5l2-5z"/>
+        </svg>
+        <h2>Obras Traduzidas</h2>
+        <p>Acesse traduções de obras católicas importantes</p>
+      </div>
+
+      <a href="/linha_do_tempo/viagens_sao_paulo_apostolo.html" class="card-link">
+        <div class="card">
+          <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          <h2>Viagens de São Paulo</h2>
+          <p>Explore as jornadas missionárias do Apóstolo</p>
+        </div>
+      </a>
+
+      <div class="card">
+        <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        <h2>Santos Modernos</h2>
+        <p>Conheça os santos dos tempos recentes</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const hamburger = document.querySelector('.hamburger');
+      const navMenu = document.querySelector('.nav-menu');
+      const navItems = document.querySelectorAll('.nav-item');
+
+      hamburger.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+      });
+
+      navItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+          if (window.innerWidth <= 768) {
+            if (e.target.classList.contains('nav-link') && e.target.nextElementSibling) {
+              e.preventDefault();
+              this.classList.toggle('active');
+            }
+          }
+        });
+      });
+
+      window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+          navMenu.classList.remove('active');
+          navItems.forEach(item => item.classList.remove('active'));
+        }
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.nav-menu') && !e.target.closest('.hamburger')) {
+          navMenu.classList.remove('active');
+          navItems.forEach(item => item.classList.remove('active'));
+        }
+      });
+    });
+
+
+
+  </script>
+</body>
+</html>
